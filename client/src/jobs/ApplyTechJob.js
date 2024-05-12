@@ -46,7 +46,6 @@ const ApplyToTechJob = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        // ... (validace)
 
         if (!name || !surname || !email || !phoneNumber || !selfDescription) {
             alert("Please fill in all fields.");
@@ -64,36 +63,36 @@ const ApplyToTechJob = () => {
 
 
         try {
-            // Uložení nového aplikanta
             const response = await axios.post("http://localhost:8081/applicant/save", applicantToSave);
-            // Zde předpokládám, že response z backendu vrací ID nově vytvořeného aplikanta
-            setTimeout(3000)
+
+            const delay = (ms) => new Promise(res => setTimeout(res, ms));
+
+            await delay(3000);
             const response2 = await axios.get(`http://localhost:8081/applicant/search/by-email?email=${applicant.email}`);
             console.log(response2)
-            const applicantId = response2.data; // Zde přistupujeme k tělu odpovědi
+            const applicantId = response2.data; 
             
             
             console.log(response);
             console.log(`Applicant ID: ${applicantId}, TechJob ID: ${jobId}`);
 
-            
-            // Propojení aplikanta s pracovní pozicí, pokud uložení bylo úspěšné
+     
             if (applicantId) {
                 try {
                   await axios.post(`http://localhost:8081/applicant/${applicantId}/apply/${jobId}`);
-                  if (response.status === 201) { // Toto je potřeba přesunout
+                  if (response.status === 201) {
                     navigate("/successpage");
                   }
                 } catch (error) {
                   console.error("Error:", error);
                 }
               }
-            if (response.status === 201) { // příklad pro stavový kód 201 Created
+            if (response.status === 201) { 
                 navigate("/successpage");
             }
         } catch (error) {
             console.error("Error:", error);
-            // Zpracování chyby, např. zobrazení zprávy uživateli
+            
         }
     };
 
@@ -106,7 +105,7 @@ const ApplyToTechJob = () => {
                     <div>
                         <h2>Applying for: {techJob.name}</h2>
                         <p>{techJob.baitText}</p>
-                        {/* Zde pokračuje formulář pro aplikanta */}
+                        {}
                     </div>
                 ) : (
                     <p>Loading job details...</p>

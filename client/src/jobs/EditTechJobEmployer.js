@@ -29,29 +29,7 @@ export default function EditTechJobEmployer() {
     setTechJob({ ...techJob, [e.target.name]: e.target.value });
   };
 
-  const onApprove = async (e) => {
-    e.preventDefault();
-    try {
-      await axios.put(`http://localhost:8081/techJob/${id}/approve`);
-      alert('Job approved successfully');
-      navigate("/"); // or reload the page to see the changes
-    } catch (error) {
-      console.error("Error approving tech job:", error);
-      setError("An error occurred while approving the tech job.");
-    }
-  };
 
-  const handleDecline = async () => {
-    try {
-      const response = await axios.put(`http://localhost:8081/techJob/decline/${id}`);
-      if (response.status === 200) {
-        // Assuming your backend returns the updated job after decline
-        setTechJob({ ...techJob, approved: false });
-      }
-    } catch (error) {
-      console.error("Error declining tech job:", error);
-    }
-  };
 
 
   const onSubmit = async (e) => {

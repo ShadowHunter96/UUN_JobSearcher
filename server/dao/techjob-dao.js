@@ -23,7 +23,7 @@ function get(id) {
     const fileData = fs.readFileSync(filePath, 'utf8');
     return JSON.parse(fileData);
   } catch (error) {
-    if (error.code === 'ENOENT') return null; // File not found
+    if (error.code === 'ENOENT') return null;
     throw new Error('Failed to read tech job: ' + error.message);
   }
 }
