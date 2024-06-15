@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import TechJobFilter from '../components/TechJobFilter';
 
 const JobList = () => {
   const [jobs, setJobs] = useState([])

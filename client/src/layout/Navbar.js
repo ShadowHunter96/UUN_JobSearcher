@@ -16,7 +16,7 @@ export default function Navbar() {
             <Link className="btn btn-info mx-2" to="/joblistadmin">JobListAdmin</Link>
             <Link className="btn btn-info mx-2" to="/joblist">Joblist</Link>
             <Link className="btn btn-info mx-2" to="/applicant-list">ApplicantList</Link>
-            <Link className="btn btn-info mx-2" to="/joblistadmin">JobListAdmin</Link>
+
 
           </form>
         </div>

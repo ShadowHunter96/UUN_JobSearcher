@@ -31,5 +31,4 @@ router.get("/get", (req, res) => {
   
   router.get('/get/:id', GetAbl);
 
-// Export routeru
 module.exports = router;

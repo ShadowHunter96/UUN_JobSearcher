@@ -1,95 +1,50 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-export default function ViewTechJob() {
-    const [techJob, setTechJob] = useState({
-        id: null,
-        name: "",
-        baitText: "",
-        description: "",
-        seniority: "",
-        education: "",
-        city: "",
-        budget: 0,
-        currency: "",
-        company: null,
-    });
+const ViewTechJob = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [techJob, setTechJob] = useState(null);
 
-    const { id } = useParams();
-
-    useEffect(() => {
-        loadTechJob();
-    }, []);
-
+  useEffect(() => {
     const loadTechJob = async () => {
-        const result = await axios.get(`http://localhost:8081/techJob/${id}`);
-        setTechJob(result.data);
-        console.log(result.data);
+      try {
+        const response = await axios.get(`http://localhost:8081/techJob/${id}`);
+        setTechJob(response.data);
+      } catch (error) {
+        console.error('Error loading tech job details:', error);
+      }
     };
-    console.log(techJob);
-    return (
-        <div className="container">
-            <div className="row">
-                <div className="col-md-6 offset-md-3 border rounded p-4 mt-2 shadow">
 
+    loadTechJob();
+  }, [id]);
 
-                    <div className="card">
-                        <div className="card-header">
-                            {/* Details of Tech Job id: {techJob.id} */}
-                            <ul className="list-group list-group-flush">
-                                <li className="list-group-item">
-                                    <b>Name: </b>
-                                    {techJob.name}
-                                </li>
+  if (!techJob) {
+    return <div>Loading...</div>;
+  }
 
-                                <li className="list-group-item">
-                                    <b>Bait Text: </b>
-                                    {techJob.baitText}
-                                </li>
-
-                                <li className="list-group-item">
-                                    <b>Description: </b>
-                                    {techJob.description}
-                                </li>
-
-                                <li className="list-group-item">
-                                    <b>Seniority: </b>
-                                    {techJob.seniority}
-                                </li>
-
-                                <li className="list-group-item">
-                                    <b>Education: </b>
-                                    {techJob.education}
-                                </li>
-
-                                <li className="list-group-item">
-                                    <b>City: </b>
-                                    {techJob.city}
-                                </li>
-
-                                <li className="list-group-item">
-                                    <b>Budget: </b>
-                                    {techJob.budget} {techJob.currency}
-                                </li>
-
-                                <li className="list-group-item">
-                                    <b>Company: </b>
-                                    {techJob.company ? techJob.company.name : "N/A"}
-                                </li>
-
-
-                            </ul>
-                        </div>
-                    </div>
-                    <Link className="btn btn-primary my-2 " to={`/applytechjob/${techJob.id}`} style={{ marginRight: "10px" }}>
-                        Apply
-                    </Link>
-                    <Link className="btn btn-primary my-2" to="/">
-                        Back To Home
-                    </Link>
-                </div>
-            </div>
+  return (
+    <div className="container">
+      <div className="card mt-5">
+        <div className="card-body">
+          <h3 className="card-title">Name: {techJob.name}</h3>
+          <p className="card-text"><strong>Bait Text:</strong> {techJob.baitText}</p>
+          <p className="card-text"><strong>Description:</strong> {techJob.description}</p>
+          <p className="card-text"><strong>Seniority:</strong> {techJob.seniority}</p>
+          <p className="card-text"><strong>Education:</strong> {techJob.education}</p>
+          <p className="card-text"><strong>City:</strong> {techJob.city}</p>
+          <p className="card-text"><strong>Budget:</strong> {techJob.budget} {techJob.currency}</p>
+          <p className="card-text"><strong>Company:</strong> {techJob.company ? techJob.company.name : 'N/A'}</p>
+          <div className="d-flex justify-content-center">
+            <button className="btn btn-primary mx-2" onClick={() => navigate(`/applytechjob/${id}`)}>Apply</button>
+            <button className="btn btn-primary mx-2" onClick={() => navigate(`/techjob/${id}/applicants`)}>Answers</button>
+            <Link to="/" className="btn btn-secondary mx-2">Back to Home</Link>
+          </div>
         </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
+
+export default ViewTechJob;

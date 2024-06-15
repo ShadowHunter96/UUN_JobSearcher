@@ -34,7 +34,7 @@ export default function EditTechJob() {
     try {
       await axios.put(`http://localhost:8081/techJob/${id}/approve`);
       alert('Job approved successfully');
-      navigate("/"); // or reload the page to see the changes
+      navigate("/"); 
     } catch (error) {
       console.error("Error approving tech job:", error);
       setError("An error occurred while approving the tech job.");
@@ -45,7 +45,7 @@ export default function EditTechJob() {
     try {
       const response = await axios.put(`http://localhost:8081/techJob/decline/${id}`);
       if (response.status === 200) {
-        // Assuming your backend returns the updated job after decline
+
         setTechJob({ ...techJob, approved: false });
       }
     } catch (error) {

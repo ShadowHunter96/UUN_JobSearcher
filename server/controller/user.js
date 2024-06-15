@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
+// aka admin
 const GetAbl = require("../abl/user/getAbl");
 const ListAbl = require("../abl/user/listAbl");
 const CreateAbl = require("../abl/user/createAbl");

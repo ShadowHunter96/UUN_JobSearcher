@@ -24,7 +24,6 @@ const ViewApplicant = () => {
       setApplicant(result.data);
     } catch (error) {
       console.error('Error loading applicant details:', error);
-      // Handle error as needed
     }
   };
 

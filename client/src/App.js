@@ -18,7 +18,10 @@ import ApplyTechJob from './jobs/ApplyTechJob.js';
 import JobListAdmin from './jobs/JobListAdmin.js';
 import EditTechJob from './jobs/EditTechJob.js';
 import EditTechJobEmployer from './jobs/EditTechJobEmployer.js';
-import JobList from "./jobs/JobList.js"
+import JobList from "./jobs/JobList.js";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ApplicantListForJob from './jobs/ApplicantListForjob.js';
+
 
 
 function App() {
@@ -43,6 +46,8 @@ function App() {
         <Route exact path="/joblistadmin" element={<JobListAdmin/>}></Route>
         <Route exact path="/joblist" element={<JobList/>}></Route>
         <Route exact path="/edittechjobemployer/:id" element={<EditTechJobEmployer/>}></Route>
+        <Route exact path="/techjob/:jobId/applicants" element={<ApplicantListForJob />} />
+        
 
       </Routes>
 
