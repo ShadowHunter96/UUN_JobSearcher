@@ -10,7 +10,7 @@ export default function Navbar() {
           <form className="d-flex" role="search">
             <Link className="btn btn-success mx-2" to="/">Home</Link>
             <Link className="btn btn-success mx-2" to="/addtechjob">AddTechJob</Link>
-            <Link className="btn btn-success mx-2" to="/addapplicant">AddApplicant</Link>
+            {/* <Link className="btn btn-success mx-2" to="/addapplicant">AddApplicant</Link> */}
           </form>
           <form className="d-flex" role="search">
             <Link className="btn btn-info mx-2" to="/joblistadmin">JobListAdmin</Link>

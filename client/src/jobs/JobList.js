@@ -1,38 +1,48 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import 'bootstrap-icons/font/bootstrap-icons.css';
-import TechJobFilter from '../components/TechJobFilter';
+import TechJobFilter from "../components/TechJobFilter";
 
 const JobList = () => {
-  const [jobs, setJobs] = useState([])
+  const [jobs, setJobs] = useState([]);
+  const [filters, setFilters] = useState({}); // Filtry pro backend
+
   const cardStyle = {
-    width: '50rem',
-    margin: 'auto', 
+    width: "50rem",
+    margin: "auto",
   };
 
-  const loadJobs = async () => {
+  const loadJobs = async (filterParams = {}) => {
     try {
-      const result = await axios.get("http://localhost:8081/approved");
-      if (Array.isArray(result.data)) {
-        setJobs(result.data);
-      } else {
-        console.error('Data received is not an array:', result.data);
-        setJobs([]);
-      }
+      // Odstraň prázdné hodnoty z objektu filtrů
+      const filteredParams = Object.fromEntries(
+        Object.entries(filterParams).filter(([_, value]) => value !== "" && value != null)
+      );
+  
+      const params = new URLSearchParams(filteredParams);
+      console.log("Query Params Sent:", params.toString()); // Debug log
+  
+      const result = await axios.get(`http://localhost:8081/techjob?${params}`);
+      console.log("Response Data:", result.data); // Debug log
+      setJobs(result.data);
     } catch (error) {
-      console.error('Error loading job details:', error);
+      console.error("Error loading job details:", error.response ? error.response.data : error.message);
     }
   };
-
+  
+  
   useEffect(() => {
-    loadJobs();
-  }, [])
+    loadJobs(filters);
+  }, [filters]);
+
+  const handleFilterChange = (newFilters) => {
+    setFilters(newFilters);
+  };
 
   return (
-    <div className="d-flex justify-content-center">
-      <div style={{ width: '100%', maxWidth: '960px' }}> {}
+    <div className="d-flex flex-column justify-content-center">
+      <TechJobFilter onFilterChange={handleFilterChange} />
+      <div style={{ width: "100%", maxWidth: "960px" }}>
         {jobs.map((job) => (
           <div key={job.id} className="card border-0 my-2" style={cardStyle}>
             <div className="card-body">
@@ -47,10 +57,10 @@ const JobList = () => {
                   </p>
                 </div>
                 <div className="d-flex align-items-center">
-                  <span className="badge badge-success" style={{ color: 'white', backgroundColor: 'grey', marginRight: '5px' }}>
+                  <span className="badge badge-success" style={{ color: "white", backgroundColor: "grey", marginRight: "5px" }}>
                     Level: {job.seniority}
                   </span>
-                  <span className="badge badge-success" style={{ color: 'white', backgroundColor: 'green' }}>
+                  <span className="badge badge-success" style={{ color: "white", backgroundColor: "green" }}>
                     Budget {job.budget} {job.currency}
                   </span>
                   <i className="bi bi-cursor ml-2"></i> <i className="material-icons ml-2">{job.city}</i>
@@ -61,7 +71,7 @@ const JobList = () => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default JobList;

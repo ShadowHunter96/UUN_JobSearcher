@@ -9,8 +9,7 @@ export default function Home() {
     <div className="container">
       <div className="py-5">
       <JobList/>
-      <ApplicantList/>
-      <JobListAdmin/>
+
       
       </div>
     </div>

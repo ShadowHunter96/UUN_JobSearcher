@@ -43,6 +43,7 @@ const ApplicantList = () => {
         <table className="table border shadow">
           <thead>
             <tr>
+              <th scope="col">id</th>
               <th scope="col">Name</th>
               <th scope="col">Surname</th>
               <th scope="col">Email</th>
@@ -55,6 +56,7 @@ const ApplicantList = () => {
           <tbody>
   {applicants.map((applicant) => (
     <tr key={applicant.id}>
+      <td>{applicant.id}</td>
       <td>{applicant.name}</td>
       <td>{applicant.surname}</td>
       <td>{applicant.email}</td>
